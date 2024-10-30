@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ChatAppRoute</string>
     <string name="nav_icon">Nav Icon</string>
     <string name="icon_forward">Icon Forward</string>
     <string name="password_visibility_icon">Password Visibility Icon</string>
