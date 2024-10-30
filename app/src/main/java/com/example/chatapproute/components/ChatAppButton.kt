@@ -23,12 +23,13 @@ import com.example.chatapproute.ui.theme.BluePrimaryColor
 fun ChatAppButton(
     modifier: Modifier = Modifier,
     text: String,
+    backgroundColor : Color,
     onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = BluePrimaryColor,
+            containerColor = backgroundColor,
             contentColor = Color.White
         ),
         modifier = modifier
@@ -51,6 +52,7 @@ fun ChatAppButton(
 fun PreviewChatAppButton(){
     ChatAppButton(
         text = "Login",
-        onClick = {}
+        onClick = {},
+        backgroundColor = BluePrimaryColor
     )
 }

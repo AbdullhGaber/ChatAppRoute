@@ -1,4 +1,4 @@
-package com.example.chatapproute.screens.login
+package com.example.chatapproute.screens.register
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -14,90 +14,65 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class RegisterViewModel @Inject constructor(
     private val authUseCases: AuthUseCases
-) : ViewModel() {
-    private val _loginStateFlow = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
-    val loginStateFlow = _loginStateFlow.asStateFlow()
+) : ViewModel(){
+    private val _registerStateFlow = MutableStateFlow<Resource<Unit>>(Resource.Unspecified())
+    val registerStateFlow = _registerStateFlow.asStateFlow()
 
+    val nameFieldState = mutableStateOf("")
     val emailFieldState = mutableStateOf("")
     val passwordFieldState = mutableStateOf("")
     val isPasswordVisibleState = mutableStateOf(false)
 
+    val nameFieldStateError = mutableStateOf("")
     val emailFieldStateError = mutableStateOf("")
     val passwordFieldStateError = mutableStateOf("")
 
-    fun onEvent(event : LoginScreenEvents){
+    fun onEvent(event : RegisterScreenEvents){
         when(event){
-            is LoginScreenEvents.Login -> {
-                login(event.email,event.password)
+            is RegisterScreenEvents.Register -> {
+                register(event.email, event.password)
             }
         }
     }
 
-    private fun areLoginFieldsValid(
+    private fun register(
         email: String,
         password: String
-    ) : Boolean{
-        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
-
-        if(email.isEmpty()){
-            emailFieldStateError.value = "Email field is required"
-            return false
-        }
-
-        if(!emailRegex.matches(email)){
-            emailFieldStateError.value = "Email format is not correct"
-            return false
-        }
-
-        if(password.isEmpty()){
-            passwordFieldStateError.value = "Password is required"
-            return false
-        }
-
-        if(password.length < 6){
-            passwordFieldStateError.value = "Password shouldn't be less than 6 chars"
-            return false
-        }
-
-        return true
-
-    }
-
-    private fun login(
-        email:String,
-        password:String
     ){
         viewModelScope.launch {
-            _loginStateFlow.emit(
+            _registerStateFlow.emit(
                 Resource.Loading()
             )
+
             val fieldsAreValid = areAuthFieldsValid(
+                name = nameFieldState.value,
                 email = emailFieldState.value,
                 password = passwordFieldState.value,
+                nameFieldStateError = nameFieldStateError,
                 emailFieldStateError = emailFieldStateError,
                 passwordFieldStateError = passwordFieldStateError
             )
 
             if(fieldsAreValid){
-                authUseCases.loginUseCase(
+                authUseCases.registerUseCase(
                     email = email,
                     password = password,
                     onSuccess = {
                         viewModelScope.launch {
-                            _loginStateFlow.emit(
+                            _registerStateFlow.emit(
                                 Resource.Success(data = Unit)
                             )
-                            Log.e("FIB Auth" , "login successfully")
+                            Log.e("FIB Auth" , "registered successfully")
                         }
                     },
                     onFailure = {
                         viewModelScope.launch {
-                            _loginStateFlow.emit(
+                            _registerStateFlow.emit(
                                 Resource.Failure(message = it.message)
                             )
-                            Log.e("FIB Auth" , "login failed : ${it.message}")
+                            Log.e("FIB Auth" , "register failed : ${it.message}")
                         }
                     }
                 )
