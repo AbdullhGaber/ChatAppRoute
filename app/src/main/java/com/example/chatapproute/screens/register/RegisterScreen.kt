@@ -1,6 +1,6 @@
-package com.example.chatapproute.screens.login
+package com.example.chatapproute.screens.register
 
-import androidx.compose.foundation.clickable
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -23,20 +23,18 @@ import com.example.chatapproute.components.ChatAppButton
 import com.example.chatapproute.components.ChatAppTopBar
 import com.example.chatapproute.ui.theme.BluePrimaryColor
 import com.example.chatapproute.ui.theme.LightGrey
-import com.example.data.util.Resource
 
 @Composable
-fun LoginScreen(
-    loginScreenEvents: (LoginScreenEvents) -> Unit = {},
-    loginScreenState: LoginScreenState = LoginScreenState()
+fun RegisterScreen(
+    registerScreenEvents: (RegisterScreenEvents) -> Unit = {},
+    registerScreenState: RegisterScreenState = RegisterScreenState()
 ){
-    val loginState = loginScreenState.loginStateFlow.value
-
     Scaffold(
         topBar = {
-            ChatAppTopBar(title = "Login")
+            ChatAppTopBar(title = "Register")
         }
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .paint(
@@ -46,80 +44,68 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
-        ){
+        ) {
             Spacer(modifier = Modifier.fillMaxHeight(0.3f))
-
-            Text(text = "Welcome Back!" , fontSize = 36.sp)
+            Text(text = "Full Name" , fontSize = 12.sp, color = LightGrey)
+            AuthTextField(
+                value = registerScreenState.nameFieldState.value,
+                onValueChange = {
+                    registerScreenState.nameFieldState.value = it
+                    registerScreenState.nameFieldStateError.value = ""
+                },
+                label = "name",
+                error = registerScreenState.nameFieldStateError.value
+            )
 
             Spacer(modifier = Modifier.height(32.dp))
-            
+
             Text(text = "Email" , fontSize = 12.sp, color = LightGrey)
             AuthTextField(
-                value = loginScreenState.emailFieldState.value,
+                value =  registerScreenState.emailFieldState.value,
                 onValueChange = {
-                    loginScreenState.emailFieldState.value = it
-                    loginScreenState.emailFieldStateError.value = ""
+                    registerScreenState.emailFieldState.value = it
+                    registerScreenState.emailFieldStateError.value = ""
                 },
                 label = "email",
-                error = loginScreenState.emailFieldStateError.value
+                error = registerScreenState.emailFieldStateError.value
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(text = "Password" , fontSize = 12.sp , color = LightGrey)
             AuthTextField(
-                value = loginScreenState.passwordFieldState.value,
+                value = registerScreenState.passwordFieldState.value,
                 onValueChange = {
-                    loginScreenState.passwordFieldState.value = it
-                    loginScreenState.passwordFieldStateError.value = ""
+                    registerScreenState.passwordFieldState.value = it
+                    registerScreenState.passwordFieldStateError.value = ""
                 },
                 isPasswordField = true,
-                isPasswordVisible = loginScreenState.isPasswordVisibleState.value,
+                isPasswordVisible = registerScreenState.isPasswordVisibleState.value,
                 onPasswordVisibilityChange = {
-                    loginScreenState.isPasswordVisibleState.value = it
+                    registerScreenState.isPasswordVisibleState.value = it
                 },
                 label = "password",
-                error = loginScreenState.passwordFieldStateError.value
+                error =  registerScreenState.passwordFieldStateError.value
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Forgot Password ?",
-                fontSize = 14.sp,
-                modifier = Modifier.clickable {
-
-                }
-            )
-
             Spacer(modifier = Modifier.height(32.dp))
 
             ChatAppButton(
-                text = "Login",
+                text = "Register",
                 onClick = {
-                    val email = loginScreenState.emailFieldState.value
-                    val password = loginScreenState.passwordFieldState.value
-                    loginScreenEvents(LoginScreenEvents.Login(email,password))
+                    val name = registerScreenState.nameFieldState.value
+                    val email = registerScreenState.emailFieldState.value
+                    val password = registerScreenState.passwordFieldState.value
+                    registerScreenEvents(RegisterScreenEvents.Register(name,email,password))
                 },
                 backgroundColor = BluePrimaryColor
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Or Create My Account",
-                fontSize = 14.sp,
-                modifier = Modifier.clickable {
-
-                }
-            )
-
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
-fun PreviewLoginScreen(){
-    LoginScreen()
+@Preview
+fun PreviewRegisterScreen(){
+    RegisterScreen()
 }
+
