@@ -8,7 +8,7 @@ class RegisterUseCase(
     operator fun invoke(
         email: String,
         password: String,
-        onSuccess : () -> Unit,
+        onSuccess : (String) -> Unit,
         onFailure : (Throwable) -> Unit
     ){
         authRepository.register(email, password , onSuccess , onFailure)
