@@ -24,12 +24,12 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     override fun register(
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (String) -> Unit,
         onFailure: (Throwable) -> Unit,
     ) {
         firebaseAuth.createUserWithEmailAndPassword(email , password)
             .addOnSuccessListener {
-                onSuccess()
+                onSuccess(it.user?.uid!!)
             }.addOnFailureListener {
                 onFailure(it)
             }

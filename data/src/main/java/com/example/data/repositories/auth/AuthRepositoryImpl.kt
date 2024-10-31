@@ -19,7 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun register(
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (String) -> Unit,
         onFailure: (Throwable) -> Unit,
     ) {
         authRemoteDataSource.register(email, password, onSuccess, onFailure)
