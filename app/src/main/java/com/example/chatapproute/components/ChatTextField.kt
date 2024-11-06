@@ -22,7 +22,7 @@ import com.example.chatapproute.ui.theme.BluePrimaryColor
 import com.example.chatapproute.ui.theme.LightGrey
 
 @Composable
-fun AuthTextField(
+fun ChatTextField(
     modifier: Modifier = Modifier,
     value : String,
     isPasswordField : Boolean = false,
@@ -75,5 +75,5 @@ fun AuthTextField(
 
 @Preview
 @Composable
-fun AuthTextFieldPreview() {
+fun ChatTextFieldPreview() {
 }
