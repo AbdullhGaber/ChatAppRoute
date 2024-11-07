@@ -3,4 +3,11 @@
     <string name="nav_icon">Nav Icon</string>
     <string name="icon_forward">Icon Forward</string>
     <string name="password_visibility_icon">Password Visibility Icon</string>
+    <string name="chat_app">Chat App</string>
+    <string name="create_room">Create Room</string>
+    <string name="users_icon">Users Icon</string>
+    <string name="enter_room_name">Enter Room Name</string>
+    <string name="enter_room_description">Enter Room Description</string>
+    <string name="category_selection_icon">Category selection icon</string>
+    <string name="category_image_selection">category image selection</string>
 </resources>

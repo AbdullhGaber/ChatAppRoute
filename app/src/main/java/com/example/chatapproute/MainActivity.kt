@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.chatapproute.screens.nav_graph.NavGraph
+import com.example.chatapproute.screens.nav_graph.Route
 import com.example.chatapproute.screens.register.RegisterScreen
 import com.example.chatapproute.screens.register.RegisterScreenState
 import com.example.chatapproute.screens.register.RegisterViewModel
@@ -20,23 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChatAppRouteTheme {
-                val registerViewModel : RegisterViewModel = hiltViewModel()
-
-                val registerScreenState = RegisterScreenState(
-                    nameFieldState = registerViewModel.nameFieldState,
-                    emailFieldState = registerViewModel.emailFieldState,
-                    passwordFieldState = registerViewModel.passwordFieldState,
-                    isPasswordVisibleState = registerViewModel.isPasswordVisibleState,
-                    nameFieldStateError = registerViewModel.nameFieldStateError,
-                    emailFieldStateError = registerViewModel.emailFieldStateError,
-                    passwordFieldStateError = registerViewModel.passwordFieldStateError,
-                    registerStateFlow = registerViewModel.registerStateFlow.collectAsState()
-                )
-
-                RegisterScreen(
-                    registerScreenEvents = registerViewModel::onEvent,
-                    registerScreenState = registerScreenState
-                )
+               NavGraph(startDestination = Route.HomeNavigation.route)
             }
         }
     }

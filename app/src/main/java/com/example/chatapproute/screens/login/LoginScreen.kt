@@ -18,12 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chatapproute.R
-import com.example.chatapproute.components.AuthTextField
+import com.example.chatapproute.components.ChatTextField
 import com.example.chatapproute.components.ChatAppButton
 import com.example.chatapproute.components.ChatAppTopBar
 import com.example.chatapproute.ui.theme.BluePrimaryColor
 import com.example.chatapproute.ui.theme.LightGrey
-import com.example.data.util.Resource
 
 @Composable
 fun LoginScreen(
@@ -54,7 +53,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(32.dp))
             
             Text(text = "Email" , fontSize = 12.sp, color = LightGrey)
-            AuthTextField(
+            ChatTextField(
                 value = loginScreenState.emailFieldState.value,
                 onValueChange = {
                     loginScreenState.emailFieldState.value = it
@@ -67,7 +66,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(text = "Password" , fontSize = 12.sp , color = LightGrey)
-            AuthTextField(
+            ChatTextField(
                 value = loginScreenState.passwordFieldState.value,
                 onValueChange = {
                     loginScreenState.passwordFieldState.value = it

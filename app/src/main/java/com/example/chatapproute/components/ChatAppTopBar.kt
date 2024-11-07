@@ -18,7 +18,8 @@ import com.example.chatapproute.R
 fun ChatAppTopBar(
     title : String,
     @DrawableRes navIcon : Int = 0,
-    hasNavIcon : Boolean = false
+    hasNavIcon : Boolean = false,
+    hasBackIcon : Boolean = false
 ){
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -37,7 +38,7 @@ fun ChatAppTopBar(
                     tint = Color.White
                 )
             }
-        }
+        },
     )
 }
 
