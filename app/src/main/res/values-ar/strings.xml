@@ -10,4 +10,9 @@
     <string name="enter_room_description">Enter Room Description</string>
     <string name="category_selection_icon">Category selection icon</string>
     <string name="category_image_selection">category image selection</string>
+    <string name="my_rooms">My Rooms</string>
+    <string name="browse">Browse</string>
+    <string name="category_image">Category Image</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="search_for_rooms">Search For Rooms</string>
 </resources>

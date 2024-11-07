@@ -19,7 +19,6 @@ fun ChatAppTopBar(
     title : String,
     @DrawableRes navIcon : Int = 0,
     hasNavIcon : Boolean = false,
-    hasBackIcon : Boolean = false
 ){
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
