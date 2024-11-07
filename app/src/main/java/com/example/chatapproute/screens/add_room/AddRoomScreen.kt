@@ -44,7 +44,7 @@ import com.example.chatapproute.screens.add_room.components.AddRoomButton
 import com.example.data.util.DataUtils
 import com.example.domain.entities.ChatRoom
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun AddRoomScreen(
     addRoomScreenEvents: (AddRoomScreenEvents) -> Unit = {},
@@ -132,7 +132,7 @@ fun AddRoomScreen(
                                 name = roomName,
                                 description = roomDesc,
                                 uid = uid,
-                                categoryId = selectedCategory.categoryID
+                                categoryId = selectedCategory.categoryID,
                             )
                             addRoomScreenEvents(AddRoomScreenEvents.AddRoom(room))
                         },

@@ -5,7 +5,8 @@ data class ChatRoom(
     val name : String? = null,
     val uid : String? = null,
     val description : String? = null,
-    val categoryId : String? = null
+    val categoryId : String? = null,
+    val joinedUID : List<String?> = listOf(uid)
 ){
     companion object{
         const val ROOM_COLLECTION = "rooms"
