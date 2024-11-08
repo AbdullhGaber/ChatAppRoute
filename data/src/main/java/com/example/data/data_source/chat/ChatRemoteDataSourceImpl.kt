@@ -23,4 +23,20 @@ class ChatRemoteDataSourceImpl @Inject constructor(
         }
 
     }
+
+    override fun getRooms(onSuccess: (List<ChatRoom>) -> Unit, onFailure: (Throwable) -> Unit) {
+        val collecRef = firestore.collection(ChatRoom.ROOM_COLLECTION)
+
+        collecRef.addSnapshotListener { value, error ->
+            if(error != null){
+                onFailure(error)
+                Log.e("FIB FireStore" , error.toString())
+                return@addSnapshotListener
+            }
+
+            val rooms = value?.toObjects(ChatRoom::class.java)
+            Log.e("FIB FireStore" , "Success from data source : $rooms")
+            onSuccess(rooms!!)
+        }
+    }
 }

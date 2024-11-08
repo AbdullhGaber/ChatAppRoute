@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -40,12 +41,23 @@ import com.example.chatapproute.components.ChatAppTopBar
 import com.example.chatapproute.components.ChatSearchBar
 import com.example.chatapproute.model.Category
 import com.example.chatapproute.screens.home.components.RoomCardList
+import com.example.chatapproute.screens.home.components.RoomCardListShimmer
+import com.example.chatapproute.screens.nav_graph.Route
 import com.example.chatapproute.ui.theme.BluePrimaryColor
+import com.example.data.util.Resource
 import com.example.domain.entities.ChatRoom
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    homeScreenEvents : (HomeScreenEvents) -> Unit = {},
+    homeScreenStates : HomeScreenStates = HomeScreenStates(),
+    navigateToScreen : (String) -> Unit = {}
+){
+    LaunchedEffect(Unit){
+        homeScreenEvents(HomeScreenEvents.GetRooms)
+    }
+
     Scaffold(
         topBar = {
            Column {
@@ -60,7 +72,7 @@ fun HomeScreen(){
         floatingActionButton = {
             IconButton(
                 onClick = {
-
+                    navigateToScreen(Route.AddRoomScreen.route)
                 },
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = BluePrimaryColor
@@ -91,7 +103,7 @@ fun HomeScreen(){
                 stringResource(R.string.browse)
             )
 
-            val selectedIndex = remember{ mutableIntStateOf(0) }
+            val selectedIndex = homeScreenStates.tabRowSelectedIndex
 
             TabRow(
                 selectedTabIndex = selectedIndex.intValue,
@@ -126,26 +138,29 @@ fun HomeScreen(){
             Spacer(Modifier.height(16.dp))
 
             val pagerState = rememberPagerState(initialPage = 0) { 2 }
-            val rooms = listOf(
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-                ChatRoom(name = "The Movies Zone" , categoryId = Category.MOVIES_CATEGORY , joinedUID = listOf("")),
-            )
+
             HorizontalPager(state = pagerState) {
                 when(pagerState.targetPage){
                     0 -> {
-                        RoomCardList(
-                            rooms = rooms
-                        )
+                        if(homeScreenStates.roomsStateFlow.value.data == null ||
+                            homeScreenStates.roomsStateFlow.value is Resource.Loading){
+                            RoomCardListShimmer()
+                        }else{
+                            RoomCardList(
+                                rooms = homeScreenStates.roomsStateFlow.value.data!!
+                            )
+                        }
                     }
 
                     1 -> {
-                        RoomCardList(
-                            rooms = rooms
-                        )
+                        if(homeScreenStates.roomsStateFlow.value.data == null ||
+                            homeScreenStates.roomsStateFlow.value is Resource.Loading){
+                            RoomCardListShimmer()
+                        }else{
+                            RoomCardList(
+                                rooms = homeScreenStates.roomsStateFlow.value.data!!
+                            )
+                        }
                     }
                 }
             }
