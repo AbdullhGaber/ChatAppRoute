@@ -8,6 +8,7 @@ import com.example.domain.usecases.auth_usecases.LoginUseCase
 import com.example.domain.usecases.auth_usecases.RegisterUseCase
 import com.example.domain.usecases.chat_usecaes.AddRomeUseCase
 import com.example.domain.usecases.chat_usecaes.ChatUseCases
+import com.example.domain.usecases.chat_usecaes.GetRoomsUseCase
 import com.example.domain.usecases.user_usecases.GetUserUseCase
 import com.example.domain.usecases.user_usecases.SaveUserUseCase
 import com.example.domain.usecases.user_usecases.UserUseCases
@@ -38,7 +39,8 @@ class UseCasesModule {
     @Provides
     fun provideChatUseCases(chatRepository: ChatRepository) : ChatUseCases{
         return ChatUseCases(
-            addRomeUseCase = AddRomeUseCase(chatRepository)
+            addRomeUseCase = AddRomeUseCase(chatRepository),
+            getRoomsUseCase = GetRoomsUseCase(chatRepository)
         )
     }
 }

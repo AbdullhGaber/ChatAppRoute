@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -12,6 +13,8 @@ import com.example.chatapproute.screens.add_room.AddRoomScreen
 import com.example.chatapproute.screens.add_room.AddRoomScreenStates
 import com.example.chatapproute.screens.add_room.AddRoomViewModel
 import com.example.chatapproute.screens.home.HomeScreen
+import com.example.chatapproute.screens.home.HomeScreenStates
+import com.example.chatapproute.screens.home.HomeViewModel
 import com.example.chatapproute.screens.login.LoginScreen
 import com.example.chatapproute.screens.login.LoginScreenState
 import com.example.chatapproute.screens.login.LoginViewModel
@@ -75,12 +78,24 @@ fun NavGraph(
 
         navigation(
             route = Route.HomeNavigation.route,
-            startDestination = Route.AddRoomScreen.route
+            startDestination = Route.HomeScreen.route
         ){
             composable(
                 route = Route.HomeScreen.route
             ){
-                HomeScreen()
+                val homeViewModel : HomeViewModel = hiltViewModel()
+
+                val homeScreenStates = HomeScreenStates(
+                    roomsStateFlow = homeViewModel.roomsStateFlow.collectAsState(),
+                    tabRowSelectedIndex = homeViewModel.tabRowSelectedIndex
+                )
+                HomeScreen(
+                    homeScreenEvents = homeViewModel::onEvent,
+                    homeScreenStates = homeScreenStates,
+                    navigateToScreen = {
+                        navigateToScreen(navController, it)
+                    }
+                )
             }
 
             composable(
@@ -104,6 +119,10 @@ fun NavGraph(
             }
         }
     }
+}
+
+fun navigateToScreen(navController : NavHostController, route : String){
+    navController.navigate(route)
 }
 
 @Composable
