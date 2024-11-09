@@ -31,7 +31,7 @@ class AddRoomViewModel @Inject constructor(
     fun onEvent(event: AddRoomScreenEvents){
         when(event){
             is AddRoomScreenEvents.AddRoom -> {
-                addRoom(event.room)
+                addRoom(event.room, event.onSuccess)
             }
         }
     }
@@ -52,7 +52,8 @@ class AddRoomViewModel @Inject constructor(
     }
 
     private fun addRoom(
-        room : ChatRoom
+        room : ChatRoom,
+        onSuccess : () -> Unit
     ){
         viewModelScope.launch {
             _addRoomStateFlow.emit(Resource.Loading())
@@ -64,6 +65,7 @@ class AddRoomViewModel @Inject constructor(
                             _addRoomStateFlow.emit(Resource.Success(Unit))
                         }
                         Log.e("FIB FireStore" , "Room added from viewModel")
+                        onSuccess()
                     },
                     onFailure = {
                         viewModelScope.launch {

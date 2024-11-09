@@ -48,7 +48,8 @@ import com.example.domain.entities.ChatRoom
 @Composable
 fun AddRoomScreen(
     addRoomScreenEvents: (AddRoomScreenEvents) -> Unit = {},
-    addRoomScreenStates: AddRoomScreenStates = AddRoomScreenStates()
+    addRoomScreenStates: AddRoomScreenStates = AddRoomScreenStates(),
+    navigateUp : () -> Unit = {}
 ){
     Scaffold(
         topBar = {
@@ -134,7 +135,7 @@ fun AddRoomScreen(
                                 uid = uid,
                                 categoryId = selectedCategory.categoryID,
                             )
-                            addRoomScreenEvents(AddRoomScreenEvents.AddRoom(room))
+                            addRoomScreenEvents(AddRoomScreenEvents.AddRoom(room , navigateUp))
                         },
                         text = "Create",
                         modifier = Modifier.fillMaxWidth()

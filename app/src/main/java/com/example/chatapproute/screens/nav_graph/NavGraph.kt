@@ -115,6 +115,9 @@ fun NavGraph(
                 AddRoomScreen(
                     addRoomScreenStates = addRoomScreenStates,
                     addRoomScreenEvents = addRoomViewModel::onEvent,
+                    navigateUp = {
+                        navController.navigateUp()
+                    }
                 )
             }
         }
