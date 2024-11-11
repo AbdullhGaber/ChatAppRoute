@@ -1,10 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ChatAppRoute</string>
     <string name="nav_icon">Nav Icon</string>
     <string name="icon_forward">Icon Forward</string>
     <string name="password_visibility_icon">Password Visibility Icon</string>
     <string name="chat_app">Chat App</string>
-    <string name="create_room">Create New Room</string>
+    <string name="create_room">Create Room</string>
     <string name="users_icon">Users Icon</string>
     <string name="enter_room_name">Enter Room Name</string>
     <string name="enter_room_description">Enter Room Description</string>

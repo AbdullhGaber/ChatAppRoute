@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(libs.hilt.android)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     ksp(libs.dagger.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.junit)
