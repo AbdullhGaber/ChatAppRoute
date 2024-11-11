@@ -15,12 +15,17 @@ import com.example.chatapproute.screens.add_room.AddRoomViewModel
 import com.example.chatapproute.screens.home.HomeScreen
 import com.example.chatapproute.screens.home.HomeScreenStates
 import com.example.chatapproute.screens.home.HomeViewModel
+import com.example.chatapproute.screens.join_room.JoinRoomScreen
+import com.example.chatapproute.screens.join_room.JoinRoomStates
+import com.example.chatapproute.screens.join_room.JoinRoomViewModel
 import com.example.chatapproute.screens.login.LoginScreen
 import com.example.chatapproute.screens.login.LoginScreenState
 import com.example.chatapproute.screens.login.LoginViewModel
 import com.example.chatapproute.screens.register.RegisterScreen
 import com.example.chatapproute.screens.register.RegisterScreenState
 import com.example.chatapproute.screens.register.RegisterViewModel
+import com.example.domain.entities.ChatRoom
+import java.io.Serializable
 
 @Composable
 fun NavGraph(
@@ -92,8 +97,16 @@ fun NavGraph(
                 HomeScreen(
                     homeScreenEvents = homeViewModel::onEvent,
                     homeScreenStates = homeScreenStates,
-                    navigateToScreen = {
-                        navigateToScreen(navController, it)
+                    navigateToScreen = { route, paramKey,paramValue ->
+                        navigateToScreen(
+                            navController = navController,
+                            route = route,
+                            paramKey = paramKey,
+                            paramValue = paramValue
+                        )
+                    },
+                    navigateToScreenNoParam = {
+                        navigateToScreen(navController,it)
                     }
                 )
             }
@@ -120,11 +133,36 @@ fun NavGraph(
                     }
                 )
             }
+
+            composable(
+                route = Route.JoinRoomScreen.route
+            ){
+                val room : ChatRoom = navController.previousBackStackEntry?.savedStateHandle?.get("room")!!
+
+                val joinRoomView : JoinRoomViewModel = hiltViewModel()
+
+                JoinRoomScreen(
+                    joinRoomScreenEvents = joinRoomView::onEvent,
+                    joinRoomScreenStates = JoinRoomStates(joinRoomStateFlow = joinRoomView.joinRoomStateFlow.collectAsState()),
+                    room = room
+                )
+            }
+
+            composable(
+                route = Route.ChatRoomScreen.route
+            ){
+
+            }
         }
     }
 }
 
 fun navigateToScreen(navController : NavHostController, route : String){
+    navController.navigate(route)
+}
+
+fun navigateToScreen(navController : NavHostController, route : String, paramKey : String, paramValue : Serializable){
+    navController.currentBackStackEntry?.savedStateHandle?.set(paramKey , paramValue)
     navController.navigate(route)
 }
 

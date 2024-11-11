@@ -1,4 +1,4 @@
-package com.example.chatapproute.screens.add_room.components
+package com.example.chatapproute.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import com.example.chatapproute.ui.theme.BluePrimaryColor
 
 @Composable
-fun AddRoomButton(
+fun PrimaryButton(
     modifier : Modifier = Modifier,
     onClick : () -> Unit,
     text : String
@@ -32,8 +32,8 @@ fun AddRoomButton(
 
 @Composable
 @Preview
-fun PreviewAddRoomButton(){
-    AddRoomButton(
+fun PreviewPrimaryButton(){
+    PrimaryButton(
         onClick = {},
         text = "create"
     )

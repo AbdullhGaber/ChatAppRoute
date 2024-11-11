@@ -15,4 +15,5 @@
     <string name="category_image">Category Image</string>
     <string name="search_icon">Search Icon</string>
     <string name="search_for_rooms">Search For Rooms</string>
+    <string name="hello_welcome_to_our_chat_room">Hello, Welcome to our chat room</string>
 </resources>

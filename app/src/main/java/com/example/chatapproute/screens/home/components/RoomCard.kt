@@ -26,12 +26,14 @@ import com.example.domain.entities.ChatRoom
 @Composable
 fun RoomCard(
     modifier : Modifier = Modifier,
-    onClick : () -> Unit = {},
+    onClick : (ChatRoom) -> Unit = {},
     room: ChatRoom = ChatRoom()
 ){
     Card(
         modifier = modifier,
-        onClick = onClick,
+        onClick = {
+            onClick(room)
+        },
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(20.dp),
         colors = CardDefaults.cardColors(

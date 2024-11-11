@@ -15,4 +15,13 @@ class ChatRepositoryImpl @Inject constructor(
     override fun getRooms(onSuccess: (List<ChatRoom>) -> Unit, onFailure: (Throwable) -> Unit) {
         chatRemoteDataSource.getRooms(onSuccess, onFailure)
     }
+
+    override fun joinRoom(
+        roomID: String,
+        uid: String,
+        onSuccess: () -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        chatRemoteDataSource.joinRoom(roomID, uid, onSuccess, onFailure)
+    }
 }
