@@ -11,21 +11,17 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
@@ -39,20 +35,21 @@ import androidx.compose.ui.unit.sp
 import com.example.chatapproute.R
 import com.example.chatapproute.components.ChatAppTopBar
 import com.example.chatapproute.components.ChatSearchBar
-import com.example.chatapproute.model.Category
 import com.example.chatapproute.screens.home.components.RoomCardList
 import com.example.chatapproute.screens.home.components.RoomCardListShimmer
 import com.example.chatapproute.screens.nav_graph.Route
 import com.example.chatapproute.ui.theme.BluePrimaryColor
+import com.example.data.util.DataUtils
 import com.example.data.util.Resource
-import com.example.domain.entities.ChatRoom
+import java.io.Serializable
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     homeScreenEvents : (HomeScreenEvents) -> Unit = {},
     homeScreenStates : HomeScreenStates = HomeScreenStates(),
-    navigateToScreen : (String) -> Unit = {}
+    navigateToScreen : (String,String,Serializable) -> Unit = {s1,s2,a1 ->},
+    navigateToScreenNoParam : (String) -> Unit = {},
 ){
     LaunchedEffect(Unit){
         homeScreenEvents(HomeScreenEvents.GetRooms)
@@ -72,7 +69,7 @@ fun HomeScreen(
         floatingActionButton = {
             IconButton(
                 onClick = {
-                    navigateToScreen(Route.AddRoomScreen.route)
+                    navigateToScreenNoParam(Route.AddRoomScreen.route)
                 },
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = BluePrimaryColor
@@ -146,8 +143,19 @@ fun HomeScreen(
                             homeScreenStates.roomsStateFlow.value is Resource.Loading){
                             RoomCardListShimmer()
                         }else{
+                            val myRooms = homeScreenStates.roomsStateFlow.value.data?.filter{
+                                it.joinedUID.contains(DataUtils.uid)
+                            }
+
                             RoomCardList(
-                                rooms = homeScreenStates.roomsStateFlow.value.data!!
+                                onCardClick = {
+                                    navigateToScreen(
+                                        Route.ChatRoomScreen.route,
+                                        "room",
+                                        it
+                                    )
+                                },
+                                rooms = myRooms!!
                             )
                         }
                     }
@@ -158,6 +166,13 @@ fun HomeScreen(
                             RoomCardListShimmer()
                         }else{
                             RoomCardList(
+                                onCardClick = {
+                                    navigateToScreen(
+                                        Route.JoinRoomScreen.route,
+                                        "room",
+                                        it
+                                    )
+                                },
                                 rooms = homeScreenStates.roomsStateFlow.value.data!!
                             )
                         }
@@ -171,7 +186,7 @@ fun HomeScreen(
                 }
             }
 
-            LaunchedEffect(key1 = selectedIndex){
+            LaunchedEffect(key1 = selectedIndex.intValue){
                 pagerState.animateScrollToPage(selectedIndex.intValue)
             }
         }

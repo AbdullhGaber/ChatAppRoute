@@ -13,6 +13,13 @@ interface ChatRepository {
         onSuccess : (List<ChatRoom>) -> Unit,
         onFailure : (Throwable) -> Unit
     )
+
+    fun joinRoom(
+        roomID : String,
+        uid : String,
+        onSuccess : () -> Unit,
+        onFailure : (Throwable) -> Unit
+    )
 }
 
 interface ChatRemoteDataSource{
@@ -24,6 +31,13 @@ interface ChatRemoteDataSource{
 
     fun getRooms(
         onSuccess : (List<ChatRoom>) -> Unit,
+        onFailure : (Throwable) -> Unit
+    )
+
+    fun joinRoom(
+        roomID : String,
+        uid : String,
+        onSuccess : () -> Unit,
         onFailure : (Throwable) -> Unit
     )
 }

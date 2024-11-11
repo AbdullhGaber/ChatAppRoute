@@ -15,7 +15,8 @@ import com.example.domain.entities.ChatRoom
 @Composable
 fun RoomCardList(
     modifier : Modifier = Modifier,
-    rooms : List<ChatRoom> = emptyList()
+    rooms : List<ChatRoom> = emptyList(),
+    onCardClick : (ChatRoom) -> Unit = {}
 ){
     LazyVerticalStaggeredGrid(
         modifier = Modifier.fillMaxSize(),
@@ -23,7 +24,11 @@ fun RoomCardList(
         verticalItemSpacing = 8.dp
     ){
         items(rooms){
-            RoomCard(room = it , modifier = modifier.padding(8.dp))
+            RoomCard(
+                room = it,
+                modifier = modifier.padding(8.dp),
+                onClick = onCardClick
+            )
         }
     }
 }

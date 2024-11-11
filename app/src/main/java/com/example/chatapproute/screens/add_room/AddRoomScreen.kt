@@ -40,7 +40,7 @@ import com.example.chatapproute.R
 import com.example.chatapproute.components.ChatAppTopBar
 import com.example.chatapproute.components.ChatTextField
 import com.example.chatapproute.model.Category
-import com.example.chatapproute.screens.add_room.components.AddRoomButton
+import com.example.chatapproute.components.PrimaryButton
 import com.example.data.util.DataUtils
 import com.example.domain.entities.ChatRoom
 
@@ -124,7 +124,7 @@ fun AddRoomScreen(
 
                     Spacer(modifier = Modifier.height(32.dp))
 
-                    AddRoomButton(
+                    PrimaryButton(
                         onClick = {
                             val roomName = addRoomScreenStates.roomNameState.value
                             val roomDesc = addRoomScreenStates.roomDescription.value
