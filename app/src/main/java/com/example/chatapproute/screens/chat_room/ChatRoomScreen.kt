@@ -121,6 +121,7 @@ fun ChatRoomScreen(
                         Spacer(modifier = Modifier.width(4.dp))
 
                         Button(
+                            enabled = screenStates.messageState.value.isNotEmpty(),
                             modifier = Modifier.weight(1f),
                             onClick = {
                                 val message = Message(
