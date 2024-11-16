@@ -1,6 +1,7 @@
 package com.example.data.repositories.chat
 
 import com.example.domain.entities.ChatRoom
+import com.example.domain.entities.Message
 import com.example.domain.repositories.ChatRemoteDataSource
 import com.example.domain.repositories.ChatRepository
 import javax.inject.Inject
@@ -23,5 +24,13 @@ class ChatRepositoryImpl @Inject constructor(
         onFailure: (Throwable) -> Unit,
     ) {
         chatRemoteDataSource.joinRoom(roomID, uid, onSuccess, onFailure)
+    }
+
+    override fun sendMessage(
+        message: Message,
+        onSuccess: () -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        chatRemoteDataSource.sendMessage(message, onSuccess, onFailure)
     }
 }
