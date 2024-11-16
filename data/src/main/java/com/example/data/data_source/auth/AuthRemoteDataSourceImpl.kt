@@ -1,5 +1,6 @@
 package com.example.data.data_source.auth
 
+import com.example.data.util.DataUtils
 import com.example.domain.repositories.AuthRemoteDataSource
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
@@ -15,6 +16,7 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     ) {
         firebaseAuth.signInWithEmailAndPassword(email , password)
             .addOnSuccessListener {
+                DataUtils.firebUser = it.user
                 onSuccess()
             }.addOnFailureListener {
                 onFailure(it)
@@ -29,6 +31,7 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     ) {
         firebaseAuth.createUserWithEmailAndPassword(email , password)
             .addOnSuccessListener {
+                DataUtils.firebUser = it.user
                 onSuccess(it.user?.uid!!)
             }.addOnFailureListener {
                 onFailure(it)
