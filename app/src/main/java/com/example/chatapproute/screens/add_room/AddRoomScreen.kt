@@ -128,7 +128,7 @@ fun AddRoomScreen(
                         onClick = {
                             val roomName = addRoomScreenStates.roomNameState.value
                             val roomDesc = addRoomScreenStates.roomDescription.value
-                            val uid = DataUtils.uid?: "NO USER ID"
+                            val uid = DataUtils.uid
                             val room = ChatRoom(
                                 name = roomName,
                                 description = roomDesc,

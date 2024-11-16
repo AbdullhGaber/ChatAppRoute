@@ -1,6 +1,7 @@
 package com.example.domain.repositories
 
 import com.example.domain.entities.ChatRoom
+import com.example.domain.entities.Message
 
 interface ChatRepository {
     fun addRoom(
@@ -19,6 +20,12 @@ interface ChatRepository {
         uid : String,
         onSuccess : () -> Unit,
         onFailure : (Throwable) -> Unit
+    )
+
+    fun sendMessage(
+        message : Message,
+        onSuccess: () -> Unit,
+        onFailure: (Throwable) -> Unit
     )
 }
 
@@ -39,5 +46,11 @@ interface ChatRemoteDataSource{
         uid : String,
         onSuccess : () -> Unit,
         onFailure : (Throwable) -> Unit
+    )
+
+    fun sendMessage(
+        message : Message,
+        onSuccess: () -> Unit,
+        onFailure: (Throwable) -> Unit
     )
 }

@@ -35,13 +35,14 @@ import com.example.chatapproute.screens.nav_graph.Route
 import com.example.data.util.DataUtils
 import com.example.data.util.Resource
 import com.example.domain.entities.ChatRoom
+import java.io.Serializable
 
 @Composable
 fun JoinRoomScreen(
     room : ChatRoom = ChatRoom(),
     joinRoomScreenEvents: (JoinRoomScreenEvents) -> Unit = {},
     joinRoomScreenStates: JoinRoomStates = JoinRoomStates(),
-    navigateToScreen : (String) -> Unit = {}
+    navigateToScreen : (String,String,Serializable) -> Unit = {s1,s2,s3 ->}
 ){
     Scaffold(
         topBar = {
@@ -124,7 +125,7 @@ fun JoinRoomScreen(
                                     roomID = room.id!!,
                                     uid = DataUtils.uid,
                                     onSuccess = {
-//                                        navigateToScreen(Route.ChatRoomScreen.route)
+                                        navigateToScreen(Route.ChatRoomScreen.route,"room", room)
                                     }
                                 ))
                             }

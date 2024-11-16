@@ -10,6 +10,7 @@ import com.example.domain.usecases.chat_usecaes.AddRomeUseCase
 import com.example.domain.usecases.chat_usecaes.ChatUseCases
 import com.example.domain.usecases.chat_usecaes.GetRoomsUseCase
 import com.example.domain.usecases.chat_usecaes.JoinRoomUseCase
+import com.example.domain.usecases.chat_usecaes.SendMessageUseCase
 import com.example.domain.usecases.user_usecases.GetUserUseCase
 import com.example.domain.usecases.user_usecases.SaveUserUseCase
 import com.example.domain.usecases.user_usecases.UserUseCases
@@ -42,7 +43,8 @@ class UseCasesModule {
         return ChatUseCases(
             addRomeUseCase = AddRomeUseCase(chatRepository),
             getRoomsUseCase = GetRoomsUseCase(chatRepository),
-            joinRoomUseCase = JoinRoomUseCase(chatRepository)
+            joinRoomUseCase = JoinRoomUseCase(chatRepository),
+            sendMessageUseCase = SendMessageUseCase(chatRepository)
         )
     }
 }

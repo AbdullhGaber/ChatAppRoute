@@ -1,6 +1,7 @@
 package com.example.data.data_source.user
 
 import android.util.Log
+import com.example.data.util.DataUtils
 import com.example.domain.entities.AppUser
 import com.example.domain.entities.AppUser.Companion.USER_COLLECTION
 import com.example.domain.repositories.UserRemoteDataSource
@@ -33,6 +34,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
          userSnap.addOnSuccessListener{
             val user = it.toObject(AppUser::class.java)
              if(user != null){
+                 DataUtils.appUser = user
                  onSuccess(user)
                  Log.e("FIB FireStore" , "User retrieved successfully : $user")
              }else{

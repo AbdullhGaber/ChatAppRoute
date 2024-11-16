@@ -12,6 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.chatapproute.screens.add_room.AddRoomScreen
 import com.example.chatapproute.screens.add_room.AddRoomScreenStates
 import com.example.chatapproute.screens.add_room.AddRoomViewModel
+import com.example.chatapproute.screens.chat_room.ChatRoomScreen
+import com.example.chatapproute.screens.chat_room.ChatRoomScreenStates
+import com.example.chatapproute.screens.chat_room.ChatRoomViewModel
 import com.example.chatapproute.screens.home.HomeScreen
 import com.example.chatapproute.screens.home.HomeScreenStates
 import com.example.chatapproute.screens.home.HomeViewModel
@@ -144,14 +147,31 @@ fun NavGraph(
                 JoinRoomScreen(
                     joinRoomScreenEvents = joinRoomView::onEvent,
                     joinRoomScreenStates = JoinRoomStates(joinRoomStateFlow = joinRoomView.joinRoomStateFlow.collectAsState()),
-                    room = room
+                    room = room,
+                    navigateToScreen = { route, paramKey,paramValue ->
+                        navigateToScreen(
+                            navController = navController,
+                            route = route,
+                            paramKey = paramKey,
+                            paramValue = paramValue
+                        )
+                    }
                 )
             }
 
             composable(
                 route = Route.ChatRoomScreen.route
             ){
+                val roomViewModel : ChatRoomViewModel = hiltViewModel()
 
+                val room : ChatRoom = navController.previousBackStackEntry?.savedStateHandle?.get("room")!!
+                ChatRoomScreen(
+                    room = room,
+                    screenEvents = roomViewModel::onEvent,
+                    screenStates = ChatRoomScreenStates(
+                        messageState = roomViewModel.messageState
+                    )
+                )
             }
         }
     }
