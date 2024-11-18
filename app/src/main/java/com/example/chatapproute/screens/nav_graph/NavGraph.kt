@@ -169,7 +169,8 @@ fun NavGraph(
                     room = room,
                     screenEvents = roomViewModel::onEvent,
                     screenStates = ChatRoomScreenStates(
-                        messageState = roomViewModel.messageState
+                        messageState = roomViewModel.messageState,
+                        chatMessagesState = roomViewModel.chatMessagesState
                     )
                 )
             }

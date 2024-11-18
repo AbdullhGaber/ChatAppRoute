@@ -4,5 +4,6 @@ data class ChatUseCases(
     val addRomeUseCase : AddRomeUseCase,
     val getRoomsUseCase: GetRoomsUseCase,
     val joinRoomUseCase : JoinRoomUseCase,
-    val sendMessageUseCase: SendMessageUseCase
+    val sendMessageUseCase: SendMessageUseCase,
+    val getMessagesUseCase: GetMessagesUseCase
 )

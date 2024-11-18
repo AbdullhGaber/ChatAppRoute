@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -47,6 +48,10 @@ fun ChatRoomScreen(
     screenEvents: (ChatRoomScreenEvents) -> Unit = {},
     screenStates: ChatRoomScreenStates = ChatRoomScreenStates()
 ){
+    LaunchedEffect(Unit){
+        screenEvents(ChatRoomScreenEvents.GetMessages(room.id!!))
+    }
+
     Scaffold(
         topBar = {
             ChatAppTopBar(
@@ -83,9 +88,9 @@ fun ChatRoomScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ){
+                    MessagesCardList(messages = screenStates.chatMessagesState.toList())
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -152,8 +157,6 @@ fun ChatRoomScreen(
                             )
                         }
                     }
-
-                    MessagesCardList(messages = listOf())
                 }
             }
         }

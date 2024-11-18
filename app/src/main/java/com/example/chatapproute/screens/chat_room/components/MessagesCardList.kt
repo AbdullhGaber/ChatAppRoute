@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.data.util.DataUtils
 import com.example.domain.entities.Message
 
 @Composable
@@ -18,7 +19,8 @@ fun MessagesCardList(
         modifier = modifier
     ){
         items(messages){ message ->
-            if(message.senderID == "0"){
+//            DataUtils.appUser?.uid
+            if(message.senderID == "o8xX48d5TqN4Ucq3PKOlTmkdhdj1"){
                 SentMessageCard(message = message)
             }else{
                 ReceivedMessageCard(message = message)

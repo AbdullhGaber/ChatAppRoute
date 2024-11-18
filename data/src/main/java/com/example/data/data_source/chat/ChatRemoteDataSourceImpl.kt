@@ -78,4 +78,29 @@ class ChatRemoteDataSourceImpl @Inject constructor(
                 Log.e("FIB FireStore","Error : ${it.message}")
             }
     }
+
+    override fun getMessages(
+        roomID: String,
+        onSuccess: (List<Message>) -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        val roomDocRef = firestore.collection(ChatRoom.ROOM_COLLECTION).document(roomID)
+
+        roomDocRef.collection(MESSAGE_COLLECTION).addSnapshotListener { snapshot, error ->
+            if(error != null){
+                onFailure(error)
+                Log.e("FIB FireStore" , "Error : ${error.message }")
+                return@addSnapshotListener
+            }
+
+            val messages = snapshot?.toObjects(Message::class.java)
+
+            if(messages != null){
+                onSuccess(messages)
+                Log.e("FIB FireStore" , "Messages retrieved successfully")
+            }else{
+                onFailure(Exception("Messages null"))
+            }
+        }
+    }
 }

@@ -33,4 +33,12 @@ class ChatRepositoryImpl @Inject constructor(
     ) {
         chatRemoteDataSource.sendMessage(message, onSuccess, onFailure)
     }
+
+    override fun getMessages(
+        roomID: String,
+        onSuccess: (List<Message>) -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        chatRemoteDataSource.getMessages(roomID, onSuccess, onFailure)
+    }
 }

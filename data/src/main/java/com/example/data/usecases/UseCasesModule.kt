@@ -8,6 +8,7 @@ import com.example.domain.usecases.auth_usecases.LoginUseCase
 import com.example.domain.usecases.auth_usecases.RegisterUseCase
 import com.example.domain.usecases.chat_usecaes.AddRomeUseCase
 import com.example.domain.usecases.chat_usecaes.ChatUseCases
+import com.example.domain.usecases.chat_usecaes.GetMessagesUseCase
 import com.example.domain.usecases.chat_usecaes.GetRoomsUseCase
 import com.example.domain.usecases.chat_usecaes.JoinRoomUseCase
 import com.example.domain.usecases.chat_usecaes.SendMessageUseCase
@@ -44,7 +45,8 @@ class UseCasesModule {
             addRomeUseCase = AddRomeUseCase(chatRepository),
             getRoomsUseCase = GetRoomsUseCase(chatRepository),
             joinRoomUseCase = JoinRoomUseCase(chatRepository),
-            sendMessageUseCase = SendMessageUseCase(chatRepository)
+            sendMessageUseCase = SendMessageUseCase(chatRepository),
+            getMessagesUseCase = GetMessagesUseCase(chatRepository)
         )
     }
 }
