@@ -27,6 +27,12 @@ interface ChatRepository {
         onSuccess: () -> Unit,
         onFailure: (Throwable) -> Unit
     )
+
+    fun getMessages(
+        roomID: String,
+        onSuccess: (List<Message>) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
 }
 
 interface ChatRemoteDataSource{
@@ -51,6 +57,12 @@ interface ChatRemoteDataSource{
     fun sendMessage(
         message : Message,
         onSuccess: () -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun getMessages(
+        roomID: String,
+        onSuccess: (List<Message>) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }
